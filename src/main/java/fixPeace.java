@@ -56,7 +56,27 @@ public class fixPeace {
         }
     }
 
+static String loadFile(String fileName){//TODO changing this to string, may need to be char array
 
+    StringBuilder contentBuilder = new StringBuilder();
+    try
+    {
+
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        String sCurrentLine;
+        while ((sCurrentLine = br.readLine()) != null)
+        {
+            contentBuilder.append(sCurrentLine).append("\n");
+        }
+    }
+    catch (IOException e)
+    {
+        e.printStackTrace();
+    }
+    String warren =contentBuilder.toString();
+    //TODO turn warren into char array
+    return warren;
+}
 
 
     static void createLists(){

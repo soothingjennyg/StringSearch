@@ -58,8 +58,19 @@ public class KMP {
         int m = patternC.length;
         int n = text.length;
         int i, j;
+
+        //System.out.println(text);
+        //System.out.println("array value: " + a[text[1]][1]);
         for (i = 0, j = 0; i < n && j<m; ++i){
+            //System.out.println("array value: " + a[text[i]][j]);
+            //System.out.println("check3");
+            if(text[i] > 255){
+                j=0;
+                continue;
+            }
             j = a[text[i]][j];
+            //System.out.println("check6");
+            //System.out.println("I value " + i +" j value " + j);
             if (j ==m) { //return i-m;
                 ++counter;
                 j = 0;
