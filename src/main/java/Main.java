@@ -7,15 +7,16 @@ public class Main {
         PerformanceEvaluator temp = new PerformanceEvaluator();
         temp.checkWork();
         Timer timer = new Timer();
-        String [] testWords = {" the ", " that ", " pierre ", " natasha ", " princess ", " something ", " suddenly ", " battle ", " five ", " involuntarily ", " peoples "};
+        String [] testWords = {"the", "that", "pierre", "natasha", "princess", "something", "suddenly", "battle", "five", "involuntarily", "peoples"};
         String [] txt = {"warAndPeaceAllLower", "warren_three_quarter.txt", "warren_half.txt", "warren_quarter.txt"};
-        int count = 0;
+        int count;
 
         System.out.println("\n ----  TESTING INTERFACE ---- \n");
 
         // For each of the words in our test array...
         for (int j = 0; j < txt.length; ++j) {
             timer.saveRunType("KMP.txt", txt[j]);//TODO: run through different size of arrays? another for loop?
+            System.out.println(txt[j]);//TODO: run through different size of arrays? another for loop?
             // FIXME: Open the file. get it loaded, see decent run times
             fixPeace book = new fixPeace();
             String bookString = book.loadFile(txt[j]);
@@ -29,7 +30,7 @@ public class Main {
                 KMP kmp2 = new KMP(pattern, 256);
                 // Adjust the max iter for maximum number runs
 
-                for (int iter = 0; iter < 20; iter++) {
+                for (int iter = 0; iter < 11; iter++) {
                    // int count = kmp2.search(bookChar);
                     // Adjust to be the number of warmup runs.
                     if (iter > 9) {
@@ -38,7 +39,7 @@ public class Main {
                         timer.stop();
                         timer.saveTime("KMP.txt");
 
-                        System.out.println("Found[" + count + "] instances of[" + pat + "]");
+                        System.out.println("Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                     }
                 }
             }
@@ -56,17 +57,45 @@ public class Main {
                 String pat = testWords[i];
                 timer.saveRunType("BM.txt", testWords[i]);//TODO: run through different size of arrays? another for loop?
                 char[] pattern = pat.toCharArray();
-                BM bm = new BM(pat);
+                BM bm = new BM(pattern, 256);
                 // Adjust the max iter for maximum number runs
 
-                for (int iter = 0; iter < 20; iter++) {
+                for (int iter = 0; iter < 11; iter++) {
                     // int count = kmp2.search(bookChar);
                     // Adjust to be the number of warmup runs.
                     if (iter > 9) {
                         timer.start();
-                        count = bm.search(bookString);
+                        count = bm.search(bookChar);
                         timer.stop();
                         timer.saveTime("BM.txt");
+
+                        System.out.println("Found[" + count + "] instances of[" + pat + "]");
+                    }
+                }
+            }
+        }
+        for (int j = 0; j < txt.length; ++j) {
+            timer.saveRunType("Hybrid.txt", txt[j]);//TODO: run through different size of arrays? another for loop?
+            fixPeace book = new fixPeace();
+            String bookString = book.loadFile(txt[j]);
+            char[] bookChar = bookString.toCharArray();
+            // char[] text = txt[j].toCharArray();
+
+            for (int i = 0; i < testWords.length; ++i) {
+                String pat = testWords[i];
+                timer.saveRunType("Hybrid.txt", testWords[i]);//TODO: run through different size of arrays? another for loop?
+                char[] pattern = pat.toCharArray();
+                Hybrid hybrid = new Hybrid();
+                // Adjust the max iter for maximum number runs
+
+                for (int iter = 0; iter < 11; iter++) {
+                    // int count = kmp2.search(bookChar);
+                    // Adjust to be the number of warmup runs.
+                    if (iter > 9) {
+                        timer.start();
+                        count = hybrid.FJS(pattern, pattern.length, bookChar, bookChar.length);
+                        timer.stop();
+                        timer.saveTime("Hybrid.txt");
 
                         System.out.println("Found[" + count + "] instances of[" + pat + "]");
                     }

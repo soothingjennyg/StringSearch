@@ -6,7 +6,7 @@ public class BM {
 
     private char[] pattern; //store the pattern as a character
     private String pat;  //store as a string TODO: Decide which method
-
+/*
 public BM(String pat){
     this.r = 256;
     this.pat = pat;
@@ -18,6 +18,7 @@ public BM(String pat){
         right[pat.charAt(j)] = j;
     }
 }
+*/
 public BM(char[] pattern, int r) {
     this.r = r;
     this.pattern = new char[pattern.length];
@@ -32,7 +33,7 @@ public BM(char[] pattern, int r) {
         right[pattern[j]] = j;
     }
 }
-
+/*
 public int search(String txt) {
     int m = pat.length();
     int n = txt.length();
@@ -50,7 +51,9 @@ public int search(String txt) {
         }
         return n; //not found
     }
+    */
     public int search(char[] text) {
+        int count = 0;
         int m = pattern.length;
         int n = text.length;
         int skip;
@@ -62,9 +65,12 @@ public int search(String txt) {
                     break;
                 }
             }
-            if (skip == 0) return i;    // found
+            if (skip == 0) {
+                skip = 1;
+                ++count;    // found
+            }
         }
-        return n;                       // not found
+        return count;                       // not found
     }
 
     public static void main(String[] args) {
@@ -73,7 +79,7 @@ public int search(String txt) {
     char[] pattern = pat.toCharArray();
     char[] text = txt.toCharArray();
 
-    BM bm1 = new BM(pat);
+    //BM bm1 = new BM(pat);
     BM bm2 = new BM(pattern, 256);
     //int offset1 = bm1.search(txt);
     int offset2 = bm2.search(text);//TODO why?

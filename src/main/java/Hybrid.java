@@ -18,7 +18,8 @@ public class Hybrid {
     public void makebetap (char p[], int m){ //fix p CTYPE?
         int i = 0;
         int j = betap[0] = -1;
-        while (i < m) {
+        // FIXME: The m-1 is a workaround..
+        while (i < (m - 1)) {
             while ((j > -1) && (p[i] != p[j])) {
                 j = betap[j];
             }
@@ -35,16 +36,18 @@ public class Hybrid {
 
     void makeDelta (char p[], int m){
         int i;
+        // FIXME: The m-1 is a workaround..
         for (i = 0; i < alpha; ++i) {
             delta[i] = m + 1;
         }
-        for (i = 0; i < m; ++i) {
+        for (i = 0; i < m-1; ++i) {
             delta[p[i]] = m - i;
         }
     }
-    public void FJS(char p[], int m , char x[], int n) {
+    public int FJS(char p[], int m , char x[], int n) {
+        int count = 0;
         if (m < 1)
-            return;
+            return count;
         makebetap(p, m);
         makeDelta(p, m);
 
@@ -56,9 +59,10 @@ public class Hybrid {
         while (ip < n) {
             if (j <= 0) {
                 while (p[mp] != x[ip]) {
-                    ip += delta[x[ip + 1]];
+                    //ip += delta[x[ip + 1]]; TODO OLD WAY? NOT IN MY HOUSE!
+                    ip += delta[x[ip]];
                     if (ip >= n)
-                        return;
+                        return count;
                 }
                 j = 0;
                 i = ip - mp;
@@ -67,7 +71,8 @@ public class Hybrid {
                     ++j;
                 }
                 if (j == mp) {
-                    output(i - mp);
+                  //  output(i - mp);
+                    ++count;
                     ++i;
                     ++j;
                 }
@@ -82,12 +87,14 @@ public class Hybrid {
                     ++j;
                 }
                 if (j == m) {
-                    output(i - m);
+                  //  output(i - m);
+                    ++count;
                 }
                 j = betap[j];
             }
             ip = i + mp - j;
         }
+        return count;
     }
 
     public int main(){
