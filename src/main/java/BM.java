@@ -24,8 +24,11 @@ public BM(char[] pattern, int r) {
     for (int j = 0; j < pattern.length; ++j) {
         this.pattern[j] = pattern[j];
     }
-    for (int j = 0;
-         j < pattern.length; ++j) {
+    right = new int[r];
+    for (int c = 0; c < r; ++c){
+        right[c] = -1;
+    }
+    for (int j = 0; j < pattern.length; ++j) {
         right[pattern[j]] = j;
     }
 }
@@ -47,28 +50,44 @@ public int search(String txt) {
         }
         return n; //not found
     }
+    public int search(char[] text) {
+        int m = pattern.length;
+        int n = text.length;
+        int skip;
+        for (int i = 0; i <= n - m; i += skip) {
+            skip = 0;
+            for (int j = m-1; j >= 0; j--) {
+                if (pattern[j] != text[i+j]) {
+                    skip = Math.max(1, j - right[text[i+j]]);
+                    break;
+                }
+            }
+            if (skip == 0) return i;    // found
+        }
+        return n;                       // not found
+    }
 
     public static void main(String[] args) {
-    String pat = args[0];
-    String txt = args[1];
+    String pat = "JennyG";
+    String txt = "Your mom is JennyG and that is so cool";
     char[] pattern = pat.toCharArray();
     char[] text = txt.toCharArray();
 
     BM bm1 = new BM(pat);
     BM bm2 = new BM(pattern, 256);
-    int offset1 = bm1.search(txt);
-    //int offset2 = bm2.search(text);//TODO why?
+    //int offset1 = bm1.search(txt);
+    int offset2 = bm2.search(text);//TODO why?
 
         System.out.println("text:    " + txt);
 
         System.out.print("pattern: ");
-        for (int i = 0; i < offset1; i++)
-            System.out.print(" ");
+        //for (int i = 0; i < offset1; i++)
+        //    System.out.print(" ");
         System.out.println(pat);
 
         System.out.print("pattern: ");
-        //for (int i = 0; i < offset2; i++)
-        //    System.out.print(" ");
+        for (int i = 0; i < offset2; i++)
+            System.out.print(" ");
         System.out.println(pat);
 }
 }
