@@ -48,8 +48,8 @@ public class Hybrid {
         int count = 0;
         if (m < 1)
             return count;
-        makebetap(p, m);
-        makeDelta(p, m);
+       // makebetap(p, m); //these are called in teh time run
+        //makeDelta(p, m);
 
         int i = 0;
         int j = 0;
