@@ -7,7 +7,7 @@ public class Hybrid {
     public int betap[] = new int[maxPattern + 1];
     public int delta[] = new int[alpha];
 
-    public void output (int pos){
+    public void output(int pos) {
         int matches = 0;
         System.out.println("match found at ");
         System.out.print(pos);
@@ -15,7 +15,7 @@ public class Hybrid {
         System.out.print(matches + 1);
     }
 
-    public void makebetap (char p[], int m){ //fix p CTYPE?
+    public void makebetap(char p[], int m) { //fix p CTYPE?
         int i = 0;
         int j = betap[0] = -1;
         // FIXME: The m-1 is a workaround..
@@ -34,21 +34,22 @@ public class Hybrid {
 
     }
 
-    void makeDelta (char p[], int m){
+    void makeDelta(char p[], int m) {
         int i;
         // FIXME: The m-1 is a workaround..
         for (i = 0; i < alpha; ++i) {
             delta[i] = m + 1;
         }
-        for (i = 0; i < m-1; ++i) {
+        for (i = 0; i < m - 1; ++i) {
             delta[p[i]] = m - i;
         }
     }
-    public int FJS(char p[], int m , char x[], int n) {
+
+    public int FJS(char p[], int m, char x[], int n) {
         int count = 0;
         if (m < 1)
             return count;
-       // makebetap(p, m); //these are called in teh time run
+       //  makebetap(p, m); //these are called in teh time run
         //makeDelta(p, m);
 
         int i = 0;
@@ -71,7 +72,7 @@ public class Hybrid {
                     ++j;
                 }
                 if (j == mp) {
-                  //  output(i - mp);
+                    //  output(i - mp);
                     ++count;
                     ++i;
                     ++j;
@@ -87,7 +88,7 @@ public class Hybrid {
                     ++j;
                 }
                 if (j == m) {
-                  //  output(i - m);
+                    //  output(i - m);
                     ++count;
                 }
                 j = betap[j];
@@ -97,11 +98,36 @@ public class Hybrid {
         return count;
     }
 
-    public int main(){
-return 0;
+    public static void main(String args[]) {
+
+
+        //KMP kmp1 = new KMP(pat);
+        // int offset1 = kmp1.search(txt);
+        Hybrid kjs = new Hybrid();
+        String pat = "jennyg";
+        String txt = "This jennyg is jennyg";
+        char[] pattern = pat.toCharArray();
+        char[] text = txt.toCharArray();
+        kjs.makeDelta(pattern, pattern.length);
+        kjs.makebetap(pattern, pattern.length);
+        int num = kjs.FJS(pattern, pattern.length, text, text.length);
+
+
+        System.out.print("NUM OF JENS: ");
+        System.out.print(num);
+        //for (int i = 0; i < offset1; ++i) {
+        //    System.out.print(" ");
+        //}
+        // System.out.println(pat);
+/*
+        System.out.print("pattern: ");
+        for (int i = 0; i < offset2; ++i) {
+            System.out.print(" ");
+        }
+        System.out.println(pat);
+*/
     }
-
-
 }
+
 
 

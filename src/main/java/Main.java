@@ -7,7 +7,10 @@ public class Main {
         PerformanceEvaluator temp = new PerformanceEvaluator();
         temp.checkWork();
         Timer timer = new Timer();
-        String[] testWords = {"the", "that", "pierre", "princess", "something", "suddenly", "battle", "five", "involuntarily", "peoples"};
+        //String[] testWords = {"the", "that", "pierre", "princess", "something", "suddenly", "battle", "five", "involuntarily", "peoples"};
+        String[] testWords = {"officers were about to take leave but prince andrew apparently",
+                "reluctant to be left alone with his friend asked them to stay and have",
+                "tea seats were brought in and so was the tea the officers gazed with", "expression was so "};
         String[] txt = {"warAndPeaceAllLower", "warren_three_quarter.txt", "warren_half.txt", "warren_quarter.txt"};
         int[] numRuns = {1000, 750, 500, 250};
         int count = 0;
@@ -19,7 +22,7 @@ public class Main {
             System.out.println("\n ----  TESTING INTERFACE ---- \n");
             // For each of the words in our test array...
             for (int j = 0; j < txt.length; ++j) {
-                timer.saveRunType("KMP.txt", txt[j]);
+                timer.saveRunType("KMP1.txt", txt[j]);
                 System.out.println(txt[j]);
                 fixPeace book = new fixPeace();
                 String bookString = book.loadFile("warAndPeaceAllLower");  //CHANGED TO ALWAYS READ
@@ -29,7 +32,7 @@ public class Main {
 
                 for (int i = 0; i < testWords.length; ++i) {
                     String pat = testWords[i];
-                    timer.saveRunType("KMP.txt", testWords[i]);
+                    timer.saveRunType("KMP1.txt", testWords[i]);
                     char[] pattern = pat.toCharArray();
                     KMP kmp2 = new KMP(pattern, 256);//this needs to be timed...
                     // Adjust the max iter for maximum number runs
@@ -44,17 +47,18 @@ public class Main {
                                 count = kmpTest.search(bookChar);
                             }
                             timer.stop();
-                            timer.saveTime("KMP.txt");
+                            timer.saveTime("KMP1.txt");
 
                             //    System.out.println("Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                         }
-                        System.out.println("KMP FOUND[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
+                    //    System.out.println("KMP FOUND[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                     }
+                    System.out.println("KMP FOUND[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                 }
             }
             // For each of the words in our test array...
             for (int j = 0; j < txt.length; ++j) {
-                timer.saveRunType("BM.txt", txt[j]);
+                timer.saveRunType("BM1.txt", txt[j]);
                 fixPeace book = new fixPeace();
                 String bookString = book.loadFile("warAndPeaceAllLower");  //CHANGED TO ALWAYS READ
                 char[] bookChar = bookString.toCharArray();
@@ -62,7 +66,7 @@ public class Main {
 
                 for (int i = 0; i < testWords.length; ++i) {
                     String pat = testWords[i];
-                    timer.saveRunType("BM.txt", testWords[i]);
+                    timer.saveRunType("BM1.txt", testWords[i]);
                     char[] pattern = pat.toCharArray();
                     BM bm = new BM(pattern, 256);
                     // Adjust the max iter for maximum number runs
@@ -77,16 +81,17 @@ public class Main {
                                 count = bmTest.search(bookChar);
                             }
                             timer.stop();
-                            timer.saveTime("BM.txt");
+                            timer.saveTime("BM1.txt");
 
                             //    System.out.println("Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                         }
-                        System.out.println("BS Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
+                    //    System.out.println("BS Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                     }
+                    System.out.println("BS Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                 }
             }
             for (int j = 0; j < txt.length; ++j) {
-                timer.saveRunType("Hybrid.txt", txt[j]);
+                timer.saveRunType("Hybrid1.txt", txt[j]);
                 fixPeace book = new fixPeace();
                 String bookString = book.loadFile("warAndPeaceAllLower");  //CHANGED TO ALWAYS READ
                 char[] bookChar = bookString.toCharArray();
@@ -94,7 +99,7 @@ public class Main {
 
                 for (int i = 0; i < testWords.length; ++i) {
                     String pat = testWords[i];
-                    timer.saveRunType("Hybrid.txt", testWords[i]);
+                    timer.saveRunType("Hybrid1.txt", testWords[i]);
                     char[] pattern = pat.toCharArray();
                     Hybrid hybrid = new Hybrid();
                     // Adjust the max iter for maximum number runs
@@ -112,13 +117,14 @@ public class Main {
                                 count = hybrid.FJS(pattern, pattern.length, bookChar, bookChar.length);
                             }
                             timer.stop();
-                            timer.saveTime("Hybrid.txt");
+                            timer.saveTime("Hybrid1.txt");
 
                             // System.out.println("Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                         }
 
-                        System.out.println("HYBRID Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
+                        //System.out.println("HYBRID Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                     }
+                    System.out.println("HYBRID Found[" + count + "] instances of[" + pat + "] in [" + txt[j] + "]");
                 }
             }
         }
