@@ -74,8 +74,8 @@ public int search(String txt) {
     }
 
     public static void main(String[] args) {
-    String pat = "JennyG";
-    String txt = "Your mom is JennyG and that is so cool";
+    String pat = "me";
+    String txt = "Is it me youre looking for";
     char[] pattern = pat.toCharArray();
     char[] text = txt.toCharArray();
 

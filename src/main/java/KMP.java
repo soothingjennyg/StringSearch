@@ -1,6 +1,6 @@
 // this will look pretty similiar to this code: https://algs4.cs.princeton.edu/53substring/KMP.java.html
 public class KMP {
-    private int r; //radix  TODO: why does sample code have 'final'? necessary?
+    private int r; //radix
     private int[][] a;   //automoton
     private char[] patternC; // char array pattern
     private String patternS;
@@ -60,17 +60,12 @@ public class KMP {
         int i, j;
 
         for (i = 0, j = 0; i < n && j<m; ++i){
-           // if(text[i] > 255){
-           //     j=0;
-           //     continue;
-         //   }
             j = a[text[i]][j];
             if (j ==m) { //return i-m;
                 ++counter;
                 j = 0;
             }
         }
-       // if (j ==m) return i-m;
         return counter;
     }
 

@@ -23,6 +23,7 @@ public class Timer {
             try {
                 File times = new File(fileName);
                 PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(times, true)));
+                System.out.println("time is " + totalTime);
                 writer.println(totalTime);
                 writer.close();
             } catch (IOException e) {
